@@ -1,0 +1,10 @@
+#game-page {
+	width: 100vw;
+	height: 100vh;
+
+	color: var(--color-font);
+}
+
+.hide {
+	display: none;
+}
