@@ -1,6 +1,6 @@
-
 import { Image } from "react-konva";
 
+import crosshair from '../../assets/images/crosshair/white/crosshair158.png';
 import spaceshipBlue from '../../assets/images/spaceship/1.png';
 import spaceshipOrange from '../../assets/images/spaceship/2.png';
 import spaceshipPurple from '../../assets/images/spaceship/3.png';
@@ -9,7 +9,10 @@ import destroyedSpaceshipBlue from '../../assets/images/spaceship/5.png';
 import destroyedSpaceshipOrange from '../../assets/images/spaceship/6.png';
 import destroyedSpaceshipPurple from '../../assets/images/spaceship/7.png';
 import destroyedSpaceshipGreen from '../../assets/images/spaceship/8.png';
+
 import useImage from "use-image";
+import Konva from "konva";
+import { useState } from "react";
 
 interface typePosition {
 	x: number;
@@ -28,56 +31,105 @@ interface typeSpaceshipColor {
 	y: number;
 	width: number;
 	height: number;
-	offsetX: number;
-	offsetY: number;
+	life: number;
 }
 
-function SpaceshipBlue({x, y, width, height, offsetX, offsetY} : typeSpaceshipColor) {
+interface typeSpaceshipImage {
+	x: number;
+	y: number;
+	width: number;
+	height: number;
+	life: number;
+	imageDefault: CanvasImageSource | undefined;
+	imageDestroyed: CanvasImageSource | undefined;
+	onClick?(evt: Konva.KonvaEventObject<MouseEvent>): void;
+}
+
+function SpaceshipImage({x, y, width, height, life, imageDefault, imageDestroyed, onClick} : typeSpaceshipImage) {
+	const [imgCrosshair] = useImage(crosshair)
+	const [imageCrosshair, setImageCrosshair] = useState<HTMLImageElement | undefined>(imgCrosshair)
+	let imageRotationSimples : number = 0;
+
+	if (!imageDefault) {
+		const hoverOn = (e : Konva.KonvaEventObject<MouseEvent>) => {
+			setImageCrosshair(imgCrosshair)
+			const imageRef = e.currentTarget;
+			
+			imageRef.to({
+				duration: 1.5,
+				rotation: 360,
+				onFinish: () => {
+					imageRef.to({
+						duration: 1.5,
+						rotation: 0
+					})
+				}
+			})
+			
+			console.log("hoverOnImageDefault");
+			setImageCrosshair(imgCrosshair)
+		}
+
+		const hoverOff = (e : Konva.KonvaEventObject<MouseEvent>) => {
+			console.log("hoverOffImageDefault")
+			setImageCrosshair(undefined)
+		}
+		
+      return <Image rotation={imageRotationSimples} x={x + (45 / 2)} y={y + (45 / 2)} offsetX={45 / 2} offsetY={45 / 2} width={45} height={45} image={imageCrosshair} onMouseEnter={hoverOn} onMouseOut={hoverOff} />
+	}
+
+	if (life > 0) {
+		return <Image x={x} y={y} image={imageDefault} width={width} height={height} onMouseDown={onClick} />
+	}
+
+	return <Image x={x} y={y} image={imageDestroyed} width={width} height={height} onMouseDown={onClick}/>
+}
+
+function SpaceshipBlue({x, y, width, height, life} : typeSpaceshipColor) {
 	const [imgSpaceshipBlue] = useImage(spaceshipBlue)
-
-	return <Image x={x} y={y} image={imgSpaceshipBlue} width={width} height={height} offsetX={offsetX} offsetY={offsetY}/>
-}
-
-function DestroyedSpaceshipBlue({x, y, width, height, offsetX, offsetY} : typeSpaceshipColor) {
 	const [imgDestroyedSpaceshipBlue] = useImage(destroyedSpaceshipBlue)
 
-	return <Image x={x} y={y} image={imgDestroyedSpaceshipBlue} width={width} height={height} offsetX={offsetX} offsetY={offsetY}/>
+	function teste(e: Konva.KonvaEventObject<MouseEvent>) {
+		const image = e.target.attrs.image;
+		
+		if (image === imgDestroyedSpaceshipBlue) {
+			e.target.attrs.image = imgSpaceshipBlue;
+		}else{
+			e.target.attrs.image = imgDestroyedSpaceshipBlue;
+		}
+	}
+
+	return <SpaceshipImage 
+				x={x}
+				y={y}
+				life={life}
+				imageDefault={imgSpaceshipBlue}
+				imageDestroyed={imgDestroyedSpaceshipBlue}
+				width={width}
+				height={height}
+				onClick={teste}
+			 />
 }
 
-function SpaceshipOrange({x, y, width, height, offsetX, offsetY} : typeSpaceshipColor) {
+function SpaceshipOrange({x, y, width, height, life} : typeSpaceshipColor) {
 	const [imgSpaceshipOrange] = useImage(spaceshipOrange)
-
-	return <Image x={x} y={y} image={imgSpaceshipOrange} width={width} height={height} offsetX={offsetX} offsetY={offsetY}/>
-}
-
-function DestroyedSpaceshipOrange({x, y, width, height, offsetX, offsetY} : typeSpaceshipColor) {
 	const [imgDestroyedSpaceshipOrange] = useImage(destroyedSpaceshipOrange)
 
-	return <Image x={x} y={y} image={imgDestroyedSpaceshipOrange} width={width} height={height} offsetX={offsetX} offsetY={offsetY}/>
+	return <SpaceshipImage x={x} y={y} life={life} imageDefault={imgSpaceshipOrange} imageDestroyed={imgDestroyedSpaceshipOrange} width={width} height={height} />
 }
 
-function SpaceshipPurple({x, y, width, height, offsetX, offsetY} : typeSpaceshipColor) {
+function SpaceshipPurple({x, y, width, height, life} : typeSpaceshipColor) {
 	const [imgSpaceshipPurple] = useImage(spaceshipPurple)
-
-	return <Image x={x} y={y} image={imgSpaceshipPurple} width={width} height={height} offsetX={offsetX} offsetY={offsetY}/>
-}
-
-function DestroyedSpaceshipPurple({x, y, width, height, offsetX, offsetY} : typeSpaceshipColor) {
 	const [imgDestroyedSpaceshipPurple] = useImage(destroyedSpaceshipPurple)
 
-	return <Image x={x} y={y} image={imgDestroyedSpaceshipPurple} width={width} height={height} offsetX={offsetX} offsetY={offsetY}/>
+	return <SpaceshipImage x={x} y={y} life={life} imageDefault={imgSpaceshipPurple} imageDestroyed={imgDestroyedSpaceshipPurple} width={width} height={height} />
 }
 
-function SpaceshipGreen({x, y, width, height, offsetX, offsetY} : typeSpaceshipColor) {
+function SpaceshipGreen({x, y, width, height, life} : typeSpaceshipColor) {
 	const [imgSpaceshipGreen] = useImage(spaceshipGreen)
-
-	return <Image x={x} y={y} image={imgSpaceshipGreen} width={width} height={height} offsetX={offsetX} offsetY={offsetY}/>
-}
-
-function DestroyedSpaceshipGreen({x, y, width, height, offsetX, offsetY} : typeSpaceshipColor) {
 	const [imgDestroyedSpaceshipGreen] = useImage(destroyedSpaceshipGreen)
 
-	return <Image x={x} y={y} image={imgDestroyedSpaceshipGreen} width={width} height={height} offsetX={offsetX} offsetY={offsetY}/>
+	return <SpaceshipImage x={x} y={y} life={life} imageDefault={imgSpaceshipGreen} imageDestroyed={imgDestroyedSpaceshipGreen} width={width} height={height} />
 }
 
 export default function Spaceship({life, angle, radius, type}:typeSpaceship) {
@@ -102,36 +154,28 @@ export default function Spaceship({life, angle, radius, type}:typeSpaceship) {
 	const {y, x} = getPosition(angle, radius)
 	const width = 37.2
 	const height = 33.6
-	const offsetX = ((windowWidthHalf / 2) - 18.6) * -1
-	const offsetY = (windowHeightHalf - 16.8) * -1
+
+	const newY = y + ((windowHeightHalf) - (height / 2))
+	const newX = x + (windowWidthHalf / 2) - (width / 2)
 
 	if (type === 1) {		
-		if (life > 0) {
-			return <SpaceshipBlue x={x} y={y} width={width} height={height} offsetX={offsetX} offsetY={offsetY} />;
-		}else{
-			return <DestroyedSpaceshipBlue x={x} y={y} width={width} height={height} offsetX={offsetX} offsetY={offsetY} />;
-		}
+		return <SpaceshipBlue x={newX} y={newY} width={width} height={height} life={life}/>;
 	}
 
 	if (type === 2) {
-		if (life > 0) {
-			return <SpaceshipOrange x={x} y={y} width={width} height={height} offsetX={offsetX} offsetY={offsetY} />;
-		}else{
-			return <DestroyedSpaceshipOrange x={x} y={y} width={width} height={height} offsetX={offsetX} offsetY={offsetY} />;
-		}
+		return <SpaceshipOrange x={newX} y={newY} width={width} height={height} life={life}/>;
 	}
-
+	
 	if (type === 3) {
-		if (life > 0) {
-			return <SpaceshipPurple x={x} y={y} width={width} height={height} offsetX={offsetX} offsetY={offsetY} />;
-		}else{
-			return <DestroyedSpaceshipPurple x={x} y={y} width={width} height={height} offsetX={offsetX} offsetY={offsetY} />;
-		}
+		return <SpaceshipPurple x={newX} y={newY} width={width} height={height} life={life}/>;
 	}
 
-	if (life > 0) {
-		return <SpaceshipGreen x={x} y={y} width={width} height={height} offsetX={offsetX} offsetY={offsetY} />;
-	}else{
-		return <DestroyedSpaceshipGreen x={x} y={y} width={width} height={height} offsetX={offsetX} offsetY={offsetY} />;
+	if (type === 4) {
+		return <SpaceshipGreen x={newX} y={newY} width={width} height={height} life={life}/>;
 	}
+
+	const newY2 = y + ((windowHeightHalf) - (45 / 2))
+	const newX2 = x + (windowWidthHalf / 2) - (45 / 2)
+
+	return <SpaceshipImage x={newX2} y={newY2} life={life} imageDefault={undefined} imageDestroyed={undefined} width={45} height={45} />
 }
