@@ -39,3 +39,7 @@
 	width: 40px;
 	color: white;
 }
+
+.inputBlock input:focus {
+	border-color: var(--logo-blue);
+}

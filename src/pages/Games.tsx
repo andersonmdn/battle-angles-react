@@ -13,14 +13,14 @@ import TextDark from '../assets/images/logo/Text-BlueBox-Dark.svg';
 
 //Components
 import Input from "../components/Input";
+import Logo from "../components/Logo";
 
 export default function Games() {
 	return (
 		<div className={styles.gamesContainer}>
 			<nav className={styles.navContainer}>
 				<div className={styles.navLogo}>
-					<img src={IconDark} alt="Logo BlueBox"/>
-					<img src={TextDark} alt=""/>
+					<Logo style={{fontSize: 50}}/>
 				</div>
 
 				<div className={styles.navSearch}>

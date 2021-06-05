@@ -3,7 +3,12 @@ import styles from "../styles/pages/BattleAngles.module.css"
 import { Stage, Layer, Text } from 'react-konva';
 import Map from "../components/BattleAngles/Map";
 import { useEffect, useState } from "react";
+import io from 'socket.io-client'
 
+const socket = io('http://localhost:8080', { transportOptions : ['websocket'] })
+socket.on('connect', () => {
+	console.log("[IO] Connect => New Connection");
+})
 interface typeSpaceship {
 	life: number
 	type: number

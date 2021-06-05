@@ -9,15 +9,15 @@ import styles from "../styles/pages/Home.module.css";
 import IconDark from '../assets/images/logo/Icon-BlueBox-Dark.svg';
 import TextDark from '../assets/images/logo/Text-BlueBox-Dark.svg';
 import Button from "../components/Button";
+import Logo from "../components/Logo";
 
 function Home() {
   return (
     <div className={styles.loginContainer}>
-      <form className={styles.loginForm}>
-			<div className={styles.loginHeader}>
-				<img src={IconDark} alt=""/>
-				<img src={TextDark} alt=""/>
-			</div>
+		<div className={styles.loginLogo}>
+			<Logo style={{fontSize: 70}}/>
+		</div>		
+		<form className={styles.loginForm}>
 			<div className={styles.loginHeaderSecondary}>Entrar no Sistema</div>
 			<div className={styles.loginBody}>
 				<div className={styles.loginInputs}>

@@ -1,8 +1,10 @@
 :root {
-	--background: #2F3136;
+	--background: #141518;
 
+	/* Logo */
+	--logo-blue: #33B6E1;
 	/* Modal */
-	--modal-background: #36393F;
+	--modal-background: #202020;
 
 	/* Input */
 	--input-background: #303339;
