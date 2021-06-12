@@ -7,13 +7,18 @@
 
 	display: flex;
 	align-items: center;
-	justify-content: center;
+	justify-content: flex-start;
 	flex-direction: column;
+}
+
+.loginLogo {
+	padding-top: 4rem;
+	padding-bottom: 4rem;
 }
 
 .loginForm {
 	background: var(--modal-background);
-	width: 22vw;
+	width: 45vw;
 
 	padding: 2rem;
 	box-shadow: 0 2px 10px 0 rgba(0,0,0,.2);
@@ -24,24 +29,11 @@
 	flex-direction: column;
 }
 
-.loginLogo {
-	padding-bottom: 5rem;
-}
-
 .loginHeader  {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	margin-bottom: 1.5rem;
-}
-
-.loginHeader img:first-child {
-	height: 2.5rem;
-}
-
-.loginHeader img:last-child {
-	margin-left: 0.5rem;
-	height: 1rem;
 }
 
 .loginHeaderSecondary {

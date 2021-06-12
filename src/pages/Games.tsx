@@ -8,8 +8,6 @@ import { Link } from "react-router-dom";
 //Icons
 import { FaSearch } from 'react-icons/fa';
 import { GiBubbleField, GiSandsOfTime } from "react-icons/gi";
-import IconDark from '../assets/images/logo/Icon-BlueBox-Dark.svg';
-import TextDark from '../assets/images/logo/Text-BlueBox-Dark.svg';
 
 //Components
 import Input from "../components/Input";
@@ -28,8 +26,8 @@ export default function Games() {
 				</div>
 
 				<div className={styles.navProfile}>
-					<img src="https://avatars.githubusercontent.com/u/5140400?v=4" alt=""/>
-					<span>Anderson André</span>
+					<img src="https://www.osso.pt/wp-content/uploads/2013/03/765-default-avatar.png" alt=""/>
+					<span>Usuário de Teste</span>
 				</div>
 			</nav>
 			<main className={styles.mainContainer}>
@@ -37,7 +35,6 @@ export default function Games() {
 					<Link to="/Games/BattleAngles">
 						<div className={styles.gameCard}><GiBubbleField/> <span>Batalha dos Ângulos</span></div>
 					</Link>
-					<div className={styles.gameCard}><GiSandsOfTime/> <span>...</span></div>
 					<div className={styles.gameCard}><GiSandsOfTime/> <span>...</span></div>
 					<div className={styles.gameCard}><GiSandsOfTime/> <span>...</span></div>
 					<div className={styles.gameCard}><GiSandsOfTime/> <span>...</span></div>

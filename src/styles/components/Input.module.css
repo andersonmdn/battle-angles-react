@@ -17,7 +17,7 @@
 	border: 1px solid var(--text-muted);
 	font-size: 16px;
 	border-radius: 3px;
-	background-color: #303339;
+	background-color: var(--input-background);
 	color: var(--text);
 	outline: 0;
 	padding: 10px;

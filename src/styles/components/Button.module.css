@@ -3,17 +3,17 @@
 	width: 100%;
 	box-sizing: border-box;
 	padding: 0.7rem;
-	background: var(--button-background);
-	color: var(--button-text);
+	background: var(--green);
+	color: var(--black);
 	border: 0;
 	border-radius: 2px;
 	font-size: 1rem;
-	font-weight: 500;
+	font-weight: 700;
 	cursor: pointer;
 
-	transition: background-color 0.2s;
+	transition: opacity 0.2s;
 }
 
 .button:hover {
-	background: #298bac;
+	opacity: 0.8;
 }
